@@ -1,6 +1,7 @@
-<pre>
 <?php
-	$K_CSV_SOURCE = 'YOUR_GOOGLE_SPREADSHEET_URL_HERE';
+	header('Content-type: application/json');
+	
+	$K_CSV_SOURCE = '';
 	$K_NAME_INDEX = 0;
 	$K_PROGRAM_INDEX = 1;
 	$K_COUNTRY_INDEX = 4;
@@ -24,6 +25,5 @@
 		$student_data = $useful_student_data;
 	}
 	
-	print_r($student_data_array);
+	echo json_encode($student_data_array);
 ?>
-</pre>
