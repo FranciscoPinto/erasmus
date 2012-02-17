@@ -2,19 +2,13 @@ var jsonPath = "students.php"
 var map;
 var geocoder;
 var queryTries = 50;
-var queryTimeout = 200;
+var queryTimeout = 150;
 var totalMarkers = 0;
 var numberStudents = 0;
 
-
-function sleep(milliSeconds){
-	var startTime = new Date().getTime();				     // get the current time
-	while (new Date().getTime() < startTime + milliSeconds); // hog cpu
-}
-
 function initialize() {
     var myOptions = {
-        center: new google.maps.LatLng(41.1782, -8.5956),
+        center: new google.maps.LatLng(41.1782, -8.5956), // FEUP
         zoom: 2,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -31,7 +25,7 @@ function loadPoints() {
         success: function (data) {
             console.log('Data extracted:' + data);
 			console.log('\n ' + data.length + ' students ');
-			numberStudents = data.length;
+			numberStudents = data.length - 1;
 
 			$.each(data, function(index, student) {
 				var timeout = queryTimeout * index;
@@ -53,8 +47,7 @@ function addMarker( student , timeout) {
 			var lng = results[0].geometry.location.lng() + (Math.random() * (2 * delta)) - delta;
 			var randPosition = new google.maps.LatLng(lat, lng);
 			
-			//console.log('timeout: ' + queryTimeout * index);
-			console.log('Adding ' + student[0] + ' ... (' + totalMarkers + '/' + numberStudents + ')');
+			console.log('(' + totalMarkers + '/' + numberStudents + ')' + ' Adding ' + student[0] + ' to ' + student[3] + ', ' + student[2] +  ' ...');
 			
 			var marker = new google.maps.Marker({
 			map: map,
@@ -79,16 +72,11 @@ function addMarker( student , timeout) {
 			infowindow.open(map,marker);
 		});
 		
-		/*
-		google.maps.event.addListener(marker, "mouseout", function() {
-			marker.setTitle(student[0] + ', ' + student[1]);
-		});
-		*/
-		
 		totalMarkers++;
 		}
-	else 
+	else if (status == google.maps.GeocoderStatus.ZERO_RESULTS)
+		totalMarkers++;
+	else
 		setTimeout( function(){addMarker(student, timeout);}, timeout);
-		
 	});
 }
