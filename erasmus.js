@@ -2,7 +2,7 @@ var jsonPath = "students.php"
 var map;
 var geocoder;
 var queryTries = 50;
-var queryTimeout = 200;
+var queryTimeout = 50;
 var totalMarkers = 0;
 var numberStudents = 0;
 
@@ -67,7 +67,7 @@ function addMarker( student , timeout) {
 			var contentString = '<div id="content">'+
 			'<div id="siteNotice">'+
 			'</div>'+
-			'<h2 id="firstHeading" class="firstHeading">' + student[3] + ', ' + student[2] + '</h2>'+
+			'<h2 id="firstHeading" class="firstHeading">' + student[0] + ', ' + student[1] + '</h2>'+
 			'<div id="bodyContent">'+
 			'<p>' + results[0].address_components[0].long_name +  '</p>' +
 			'</div>'+
