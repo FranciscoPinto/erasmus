@@ -1,4 +1,4 @@
-var jsonPath = "students.php"
+var jsonPath = "http://f.rancis.co/erasmus/students.php"
 var map;
 var geocoder;
 
@@ -20,15 +20,17 @@ function loadPoints() {
         data: '',
         success: function (data) {
             console.log('Data extracted:' + data);
+			console.log('Data extracted length:' + data.length);
 
-			$.each(data, function(name, course, country, university) {
-				geocoder.geocode( { 'address': university + ' , ' + country}, function(results, status) {
+			$.each(data, function(index, student) {
+				console.log('address: ' + student[0] + ' , ' + student[1]);
+				geocoder.geocode( { 'address': student[3] }, function(results, status) {
 			    if (status == google.maps.GeocoderStatus.OK) {
 				map.setCenter(results[0].geometry.location);
 				var marker = new google.maps.Marker({
 					map: map,
 					position: results[0].geometry.location,
-					title: name + ' , ' + course
+					title: student[0] + ' , ' + student[1]
 				});
 				} else {
 				alert("Geocode was not successful for the following reason: " + status);
