@@ -1,4 +1,4 @@
-var jsonPath = "students.php"
+var jsonPath = "http://f.rancis.co/erasmus/students.php"
 var map;
 var geocoder;
 var queryTries = 50;
@@ -76,7 +76,9 @@ function addMarker( student , timeout) {
 		}
 	else if (status == google.maps.GeocoderStatus.ZERO_RESULTS)
 		totalMarkers++;
-	else
+	else {
+		//console.log('New timeout: ' + timeout);
 		setTimeout( function(){addMarker(student, timeout);}, timeout);
+		}
 	});
 }
